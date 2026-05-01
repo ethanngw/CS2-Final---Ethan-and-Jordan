@@ -116,7 +116,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Voting App"))
         self.voting_app_label.setText(_translate("MainWindow", "VOTING APPLICATION"))
         self.id_label.setText(_translate("MainWindow", "ID"))
         self.candidates_label.setText(_translate("MainWindow", "CANDIDATES"))
