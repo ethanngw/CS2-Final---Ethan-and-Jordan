@@ -13,11 +13,11 @@ class Logic(QMainWindow, Ui_MainWindow):
 
         super().__init__()
         self.setupUi(self)
-        self.submit_button.clicked.connect(lambda: self.submit_vote())
-        self.id_input.returnPressed.connect(self.submit_vote)  # Google helped for enter button submitting
+        self.submit_button.clicked.connect(lambda: self.__submit_vote())
+        self.id_input.returnPressed.connect(self.__submit_vote)  # Google helped for enter button submitting
 
 
-    def submit_vote(self) -> None:
+    def __submit_vote(self) -> None:
         """
         Will check if voter_id is int, is a length of 8, and is not already in data.csv
         :return: None
@@ -26,7 +26,7 @@ class Logic(QMainWindow, Ui_MainWindow):
         voter_id = self.id_input.text().strip()
 
         if self.vote_buttonsG.checkedButton() is None:
-            self.fail("no candidate")
+            self.__fail("no candidate")
             return
 
         try:
@@ -39,15 +39,15 @@ class Logic(QMainWindow, Ui_MainWindow):
                 raise ValueError
 
         except ValueError:
-            self.fail("only 8 nums")
+            self.__fail("only 8 nums")
             return
         except TypeError:
-            self.fail("no non nums")
+            self.__fail("no non nums")
             return
 
 
         with open('data.csv', 'a+', newline='') as csvfile:
-            csvfile.seek(0)
+            csvfile.seek(0)  # AI helped slightly in logic for searching in the csv to compare
             reader = csv.reader(csvfile)
             existing_ids = []
 
@@ -56,7 +56,7 @@ class Logic(QMainWindow, Ui_MainWindow):
 
             for value in existing_ids:
                 if voter_id == value[1]:
-                    self.fail("already voted")
+                    self.__fail("already voted")
                     return
 
             writer = csv.writer(csvfile)
@@ -68,7 +68,7 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.id_input.setFocus() # Google helped for returning the focus to entry box
 
 
-    def fail(self, error_type) -> None:
+    def __fail(self, error_type) -> None:
         """
         Will process each parameter given from a failure to enter the ID
 
